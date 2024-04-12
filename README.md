@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Тестовое задание **React Developer (Next.js)**
 
-## Getting Started
+- визуал по фигме [https://www.figma.com/file/XIYVl8ICFkdl3HJZcc8o8B/тестовое?type=design&node-id=0%3A1&mode=design&t=6xUI2e3VtlUzDocD-1](https://www.figma.com/file/XIYVl8ICFkdl3HJZcc8o8B/%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5?type=design&node-id=0%3A1&mode=design&t=6xUI2e3VtlUzDocD-1)
+- должен быть адаптирован под мобильные устройства и планшеты
+- наполнение контентом отзывов из html обернутого в json
+- наполнение контентом товары по апи
+    - показывать первую страницу сразу
+    - остальные страницы подгружать ajax запросом, по мере прокрутки вниз
+- при нажатии на кнопку "купить", она должна меняться на кнопки + и - и поле для ввода кол-ва товара, значение поля должно быть 1, кнопки должны добавлять отбавлять товар, так же должна быть возможность вписать в поле для ввода любое кол-во.
+- при изменении кол-ва какого-либо из товаров должна меняться информация в корзине (та что над полем с телефоном)
+- набранные товары и введенный номер телефона должны сохраняться при перезагрузки страницы
+- маска в поле для телефона
+- при нажатии кнопки "заказать" идет проверка того что телефон полностью введен
+    - если всё хорошо - отправлять запрос на сервер
+    - если есть ошибки - подсветить соответствующие поля красным (поле номера телефона)
+- после отправки запроса и получения ответа от сервера отобразить попап что всё успешно (сделать попап в стиле самого сайта)
 
-First, run the development server:
+всё из выше перечисленного делать не обязательно, но чем больше - тем лучше.
+помимо исполнения конкретных пунктов тз тк же будет ценится:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- проявлении инициативы по улучшению ux на месте. например добавить прилоадеры пока грузится контент.
+- отказоустойчивость. например пофиксить xss атаку через контент отзывов, учесть возможность того что название товара может быть длиннее чем в дизайне.
+- скорость загрузки сайта и скорость появления там контента (рекомендуется ssr)
+- читабельность/поддерживаемость/расширяемость кода
+
+код выложить на github, gitlab или на что-то похожее.
+в README указать, что из выше перечисленного было сделано, какие-то комментарии, предложения, описание проэкта, что-то такое.
+так же указать как запустить чтобы можно было посмотреть результат.
+
+API:
+тело запроса и тело ответа присылать в json формате
+так же для корректной работы необходимо передавать хэдер 'content-type: application/json'
+
+--------------------получить список отзывов----------------------
+
+GET http://o-complex.com:1337/reviews
+
+параметры: НЕТ
+
+пример ответа:
+```code
+[
+	{
+		"id": 1,
+		"text": "<h1>something</h1><p>jiofewjf wefofwejoifewoi</p>"
+	}
+]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- --------------------полуить список товаров-----------------------
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+GET http://o-complex.com:1337/products?page=1&page_size=20
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+параметры:
+'page' - страница
+'page_size' - кол-во товаров на странице
 
-## Learn More
+пример ответа:
+```code
+{
+	"page": 1,
+	"amount": 1,
+	"total": 228,
+	"items": [
+		{
+			"id": 12,
+			"image_url": "http://example.com/image.webp",
+			"title": "title",
+			"description": "description, description",
+			"price": 1215
+		}
+	]
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+- ----------------------------заказ-------------------------------
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+POST http://o-complex.com:1337/order
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+пример тела запроса:
+```code
+{
+	"phone": "79163452487",
+	"cart": [
+		{
+			"id": 12,
+			"quantity": 2
+		},
+		{
+			"id": 15,
+			"quantity": 5
+		}
+	]
+}
+```
 
-## Deploy on Vercel
+пример тела ответа, ошибка:
+```code
+{
+	"success": 0,
+	"error": "отсутствуют товарвы"
+}
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+пример тела ответа, успех:
+{
+	"success": 1,
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
