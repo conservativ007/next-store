@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { IReview } from '../interfaces'
 
-export const fetchApi = async (url: string) => {
+export const fetchReview = async () => {
+  const URL = 'http://o-complex.com:1337/reviews'
+
   try {
-    const response = await axios.get(url, {
+    const response = await axios.get(URL, {
       headers: {
         'Content-Type': 'application/json',
       },
