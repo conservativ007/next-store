@@ -3,13 +3,15 @@ import Header from './components/Header'
 import Review from './components/Review'
 import Cart from './components/ProductsList'
 import { ShoppingCart } from './components/ShoppingCart'
+import PopUp from './components/PopUp'
 
 export default function Home() {
   return (
-    <main>
+    <main className='relative'>
       <Header />
       <Review />
       <ShoppingCart />
+      <PopUp />
     </main>
   )
 }

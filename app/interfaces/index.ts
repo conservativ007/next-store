@@ -22,3 +22,8 @@ export interface ICartItem {
   product: IProduct
   quantity: number
 }
+
+export interface IOrder {
+  id: number
+  quantity: number
+}
