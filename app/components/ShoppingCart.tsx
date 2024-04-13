@@ -29,7 +29,7 @@ export const ShoppingCart = () => {
   }, [])
 
   return (
-    <div className='mb-20'>
+    <div className='md:w-4/5 m-auto mb-20'>
       <Cart />
       <ProductsList products={products} />
     </div>

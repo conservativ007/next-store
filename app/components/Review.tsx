@@ -5,7 +5,7 @@ const Review = async () => {
   const res = await fetchReview()
 
   return (
-    <div className='m-auto w-[1442px] flex justify-center gap-5'>
+    <div className='lg:flex-col lg:w-4/5 m-auto w-[1442px] flex justify-center items-center gap-5'>
       {res &&
         res.map((item: any, index: number) => {
           return (

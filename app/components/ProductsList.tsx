@@ -31,7 +31,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
   return (
     <div className='flex justify-center mt-20'>
       <div className='rounded-lg '>
-        <div className='flex gap-5'>
+        <div className='md:flex-col flex flex-wrap justify-center gap-5'>
           {products.map((product) => {
             const isPurchased = purchasedProducts[product.id]
             return (
