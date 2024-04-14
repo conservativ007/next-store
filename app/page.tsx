@@ -4,6 +4,7 @@ import Review from './components/Review'
 import Cart from './components/ProductsList'
 import { ShoppingCart } from './components/ShoppingCart'
 import PopUp from './components/PopUp'
+import Spinner from './components/Spinner'
 
 export default function Home() {
   return (
