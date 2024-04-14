@@ -61,13 +61,13 @@ const CustomInputMask = () => {
         // modify={modify}
         onMask={handleMask}
         placeholder='+7 (___) ___-__-__'
-        className={`mt-10 outline-none bg-[#222222] py-2 px-4 rounded-xl text-[#F0F0F0] text-2xl ${
+        className={`sm:w-full mt-10 outline-none bg-[#222222] py-2 px-4 rounded-xl text-[#F0F0F0] text-2xl ${
           numberIsCorrect ? '' : 'border-2 border-rose-500'
         }`}
       />
       <button
         onClick={buttonHandler}
-        className='ml-5 bg-[#222222] py-2 px-8 rounded-xl text-[#F0F0F0] text-2xl'
+        className='sm:ml-0 ml-5 bg-[#222222] py-2 px-8 rounded-xl text-[#F0F0F0] text-2xl'
       >
         Заказать
       </button>

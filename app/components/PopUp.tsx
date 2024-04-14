@@ -7,7 +7,7 @@ const PopUp = () => {
 
   if (show) {
     return (
-      <div className='absolute m-auto left-0 right-0 top-40 w-80 h-40 bg-[#777777] text-white text-3xl rounded-xl flex items-center text-center'>
+      <div className='fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-80 h-40 bg-[#777777] text-white text-3xl rounded-xl flex items-center text-center'>
         Запрос успешно отправлен
       </div>
     )
