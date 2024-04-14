@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import Header from './components/Header'
 import Review from './components/Review'
-import Cart from './components/ProductsList'
-import { ShoppingCart } from './components/ShoppingCart'
+
+import { LoadMore } from './components/LoadMore'
 import PopUp from './components/PopUp'
 import Spinner from './components/Spinner'
+import Cart from './components/Cart'
 
 export default function Home() {
   return (
     <main className='relative'>
       <Header />
       <Review />
-      <ShoppingCart />
+      <Cart />
+      <LoadMore />
       <PopUp />
     </main>
   )

@@ -1,33 +1,26 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { IGetProducts, IProduct } from '../interfaces'
-import axios from 'axios'
+import { IProduct } from '../interfaces'
 import ProductsList from './ProductsList'
 import Cart from './Cart'
 import Spinner from './Spinner'
 import { useInView } from 'react-intersection-observer'
+import { fetchProducts } from '../api/fetchProducts'
 
 let page = 1
 
-export const ShoppingCart = () => {
+export const LoadMore = () => {
   const [products, setProducts] = useState<IProduct[]>([])
   const { ref, inView } = useInView()
 
   useEffect(() => {
     if (inView) {
-      const URL = `http://o-complex.com:1337/products?page=${page}&page_size=3`
-
       const getProducts = async () => {
-        try {
-          const response = await axios.get<IGetProducts>(URL, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          setProducts((prev) => [...prev, ...response.data.products])
-        } catch (error) {
-          console.error('Error fetching products:', error)
+        const data = await fetchProducts(page)
+
+        if (data?.statusText === 'OK' && data.data) {
+          setProducts((prev) => [...prev, ...data.data.products])
         }
       }
 
@@ -39,8 +32,7 @@ export const ShoppingCart = () => {
   }, [inView])
 
   return (
-    <div className='sm:w-11/12 md:w-4/5 m-auto mb-20'>
-      <Cart />
+    <div className='sm:w-11/12 md:w-4/5 max-w-[1000px] m-auto mb-20'>
       <ProductsList products={products} />
       <div ref={ref}>
         <Spinner />

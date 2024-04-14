@@ -29,14 +29,14 @@ const ProductsList = ({ products }: ProductsListProps) => {
   }
   // console.log(products)
   return (
-    <div className='flex justify-center mt-20'>
+    <div className='md:mx-0 flex justify-center mt-20 mx-10'>
       <div className='flex flex-wrap justify-center gap-5'>
         {products.map((product) => {
           const isPurchased = purchasedProducts[product.id]
           return (
             <div
               key={product.id}
-              className='sm:w-full w-[295px] rounded p-5 text-black bg-[#D9D9D9] flex flex-col justify-between'
+              className='sm:w-full w-[293px] rounded p-5 text-black bg-[#D9D9D9] flex flex-col justify-between'
             >
               <div className=''>
                 <Image
@@ -48,7 +48,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
                 />
                 <p className='text-2xl text-center my-2'>Название</p>
                 <p>{product.title}</p>
-                <p>{product.description}</p>
+                <p>{product.description.slice(0, 100)}</p>
               </div>
               <div>
                 <p className='mt-5 text-center text-2xl'>
