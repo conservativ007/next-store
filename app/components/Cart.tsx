@@ -9,7 +9,7 @@ const Cart = () => {
 
   return (
     <div className='mt-10 flex flex-col items-center'>
-      <ul className='sm:w-full md:w-4/5 sm:text-xs bg-[#D9D9D9] text-[#222222] py-3 px-5 rounded-xl'>
+      <ul className='md:w-11/12 sm:text-xs bg-[#D9D9D9] text-[#222222] py-3 px-5 rounded-xl'>
         <li className='sm:text-center text-3xl mb-5'>Добавленные товары</li>
         {cartItems.map((item) => (
           <li key={item.product.id} className='flex mt-2'>
