@@ -5,7 +5,6 @@ import Image from 'next/image'
 
 interface ProductsListProps {
   products: IProduct[]
-  // addToCart: (product: IProduct) => void
 }
 
 interface PurchasedProducts {
@@ -13,21 +12,56 @@ interface PurchasedProducts {
 }
 
 const ProductsList = ({ products }: ProductsListProps) => {
-  const { add, increment, decrement, findProductById } = useCartStore(
-    (state) => state,
-  )
+  const { add, increment, decrement, findProductById, setCustomValue } =
+    useCartStore((state) => state)
   const [purchasedProducts, setPurchasedProducts] = useState<PurchasedProducts>(
     {},
   )
 
-  const handleClick = (product: IProduct) => {
+  const [inputTexts, setInputTexts] = useState<{ [id: number]: number }>({})
+
+  const inputHandle = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    productId: number,
+  ) => {
+    const value = e.target.value
+
+    setInputTexts((prev) => ({
+      ...prev,
+      [productId]: Number(value),
+    }))
+
+    setCustomValue(productId, Number(value))
+  }
+
+  const buyHandleClick = (product: IProduct) => {
     add({ product, quantity: 1 })
     setPurchasedProducts((prev) => ({
       ...prev,
       [product.id]: true,
     }))
+    setInputTexts((prev) => ({
+      ...prev,
+      [product.id]: 1,
+    }))
   }
-  // console.log(products)
+
+  const incrementHandleClick = (productId: number) => {
+    increment(productId)
+    setInputTexts((prev) => ({
+      ...prev,
+      [productId]: prev[productId] + 1,
+    }))
+  }
+
+  const decrementHandleClick = (productId: number) => {
+    decrement(productId)
+    setInputTexts((prev) => ({
+      ...prev,
+      [productId]: prev[productId] - 1,
+    }))
+  }
+
   return (
     <div className='md:mx-0 flex justify-center mt-20 mx-10'>
       <div className='flex flex-wrap justify-center gap-5'>
@@ -63,18 +97,19 @@ const ProductsList = ({ products }: ProductsListProps) => {
                     <div className='flex justify-center gap-3 text-2xl'>
                       <p
                         className='px-3 text-3xl bg-[#222222] rounded'
-                        onClick={() => decrement(product.id)}
+                        onClick={() => decrementHandleClick(product.id)}
                       >
                         -
                       </p>
                       <input
-                        value={findProductById(product.id)?.toString()}
+                        value={inputTexts[product.id] || 1}
+                        onChange={(e) => inputHandle(e, product.id)}
                         type='text'
                         className='max-w-20 bg-[#222222] rounded text-center'
                       />
                       <p
                         className='px-3 text-3xl bg-[#222222] rounded'
-                        onClick={() => increment(product.id)}
+                        onClick={() => incrementHandleClick(product.id)}
                       >
                         +
                       </p>
@@ -82,7 +117,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
                   ) : (
                     <div
                       className='bg-[#222222] rounded-md py-2'
-                      onClick={() => handleClick(product)}
+                      onClick={() => buyHandleClick(product)}
                     >
                       Купить
                     </div>
