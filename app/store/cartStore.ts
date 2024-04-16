@@ -6,7 +6,7 @@ interface CartStore {
   increment: (productId: number) => void
   decrement: (cartItem: number) => void
   add: (cartItem: ICartItem) => void
-  findProductById: (productId: number) => number | undefined
+  getQuantityOfProduct: (productId: number) => number | undefined
   setCustomValue: (productId: number, val: number) => void
 }
 
@@ -40,12 +40,12 @@ export const useCartStore = create<CartStore>((set, get) => ({
       }
       return state
     }),
-  findProductById: (productId) => {
+  getQuantityOfProduct: (productId) => {
     const state = get()
     const cartItem = state.cartItems.find(
       (item) => item.product.id === productId,
     )
-    return cartItem ? cartItem.quantity : undefined
+    return cartItem ? Number(cartItem.quantity) : undefined
   },
   setCustomValue: (productId: number, val: number) =>
     set((state) => {

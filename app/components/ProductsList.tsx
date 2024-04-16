@@ -12,7 +12,7 @@ interface PurchasedProducts {
 }
 
 const ProductsList = ({ products }: ProductsListProps) => {
-  const { add, increment, decrement, findProductById, setCustomValue } =
+  const { add, increment, decrement, getQuantityOfProduct, setCustomValue } =
     useCartStore((state) => state)
   const [purchasedProducts, setPurchasedProducts] = useState<PurchasedProducts>(
     {},
@@ -87,8 +87,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
               <div>
                 <p className='mt-5 text-center text-2xl'>
                   Цена:{' '}
-                  {product.price *
-                    Number(findProductById(product.id)?.toString()) ||
+                  {product.price * Number(getQuantityOfProduct(product.id)) ||
                     product.price}
                   ₽
                 </p>
